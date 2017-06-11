@@ -6,13 +6,69 @@ using System.Threading.Tasks;
 using RPNETForum.Interfaces.DatabaseMethods;
 
 namespace RPNETForum.DatabaseMethods.MySql {
-    public class UserMethods : IUserMethods {
+    public class UserMethods : BaseMethods, IUserMethods {
         public bool UserExists(string name) {
             return true;
         }
 
         public bool UserExists(int id) {
             return true;
+        }
+
+        public bool DisplayNameExists(string name) {
+            throw new NotImplementedException();
+        }
+
+        public bool EmailExists(string email) {
+            throw new NotImplementedException();
+        }
+
+        public bool IsVerified(string username) {
+            throw new NotImplementedException();
+        }
+
+        public bool IsVerified(int uid) {
+            throw new NotImplementedException();
+        }
+
+        public void AddVerification(int uid, string token) {
+            throw new NotImplementedException();
+        }
+
+        public void Verify(string troken) {
+            throw new NotImplementedException();
+        }
+
+        public void CreateUser(IUser user) {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateUser(IUser user) {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveUser(IUser user) {
+            throw new NotImplementedException();
+        }
+
+        public int CountUsers() {
+            throw new NotImplementedException();
+        }
+
+        public IUser GetLastUser() {
+            throw new NotImplementedException();
+        }
+
+        public IUser GetCurrentUser(string token) {
+            throw new NotImplementedException();
+        }
+
+        public IUser GetUserByID(int uid) {
+            throw new NotImplementedException();
+        }
+
+        public IUser GetUserByUsername(string username) {
+            throw new NotImplementedException();
         }
     }
 }

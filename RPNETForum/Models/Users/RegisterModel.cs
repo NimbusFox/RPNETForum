@@ -12,11 +12,19 @@ namespace RPNETForum.Models.Users {
     }
 
     public class RegisterResponseModel {
-        public bool Username { get; set; }
-        public string UsernameReason { get; set; }
-        public bool Password { get; set; }
-        public string PasswordReason { get; set; }
-        public bool Email { get; set; }
-        public string EmailReason { get; set; }
+        public Response Username { get; set; }
+        public Response Password { get; set; }
+        public Response Email { get; set; }
+
+        public RegisterResponseModel() {
+            Username = new Response();
+            Password = new Response();
+            Email = new Response();
+        }
+    }
+
+    public class Response {
+        public bool Success { get; set; }
+        public string Reason { get; set; }
     }
 }

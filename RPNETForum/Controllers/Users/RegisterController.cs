@@ -23,24 +23,24 @@ namespace RPNETForum.Controllers.Users {
             var response = new RegisterResponseModel();
 
             if (_userMethods.UserExists(data.Username)) {
-                response.Username = false;
-                response.UsernameReason = "This username has already been taken";
+                response.Username.Success = false;
+                response.Username.Reason = "This username has already been taken";
             } else {
-                response.Username = true;
+                response.Username.Success = true;
             }
 
             if (data.Password != data.ConfirmPassword) {
-                response.Password = false;
-                response.PasswordReason = "The passwords do not match";
+                response.Password.Success = false;
+                response.Password.Reason = "The passwords do not match";
             } else {
-                response.Password = true;
+                response.Password.Success = true;
             }
 
             if (!Validation.UserValidation.IsValidEmail(data.Email)) {
-                response.Email = false;
-                response.EmailReason = "Invalid email address";
+                response.Email.Success = false;
+                response.Email.Reason = "Invalid email address";
             } else {
-                response.Email = true;
+                response.Email.Success = true;
             }
 
             return Json(response);

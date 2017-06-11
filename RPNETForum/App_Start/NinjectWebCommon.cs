@@ -1,8 +1,11 @@
+using System.Web.Hosting;
+using RPNETForum.Classes;
+using RPNETForum.Interfaces.DatabaseMethods;
+
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(RPNETForum.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(RPNETForum.App_Start.NinjectWebCommon), "Stop")]
 
-namespace RPNETForum.App_Start
-{
+namespace RPNETForum.App_Start {
     using System;
     using System.Web;
 
@@ -10,46 +13,40 @@ namespace RPNETForum.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
+    using System.IO;
 
-    public static class NinjectWebCommon 
-    {
+    public static class NinjectWebCommon {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
 
         /// <summary>
         /// Starts the application
         /// </summary>
-        public static void Start() 
-        {
+        public static void Start() {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
             bootstrapper.Initialize(CreateKernel);
         }
-        
+
         /// <summary>
         /// Stops the application.
         /// </summary>
-        public static void Stop()
-        {
+        public static void Stop() {
             bootstrapper.ShutDown();
         }
-        
+
         /// <summary>
         /// Creates the kernel that will manage your application.
         /// </summary>
         /// <returns>The created kernel.</returns>
-        private static IKernel CreateKernel()
-        {
+        private static IKernel CreateKernel() {
             var kernel = new StandardKernel();
-            try
-            {
+            try {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
 
                 RegisterServices(kernel);
                 return kernel;
-            }
-            catch
-            {
+            } catch {
                 kernel.Dispose();
                 throw;
             }
@@ -59,8 +56,16 @@ namespace RPNETForum.App_Start
         /// Load your modules or register your services here!
         /// </summary>
         /// <param name="kernel">The kernel.</param>
-        private static void RegisterServices(IKernel kernel)
-        {
-        }        
+        private static void RegisterServices(IKernel kernel) {
+            if (!Directory.Exists(HostingEnvironment.MapPath("~/App_Data"))) {
+                Directory.CreateDirectory(HostingEnvironment.MapPath("~/App_Data"));
+            }
+
+            if (Settings.DatabaseType == DatabaseTypes.Sqlite) {
+                kernel.Bind<IUserMethods>().To<DatabaseMethods.Sqlite.UserMethods>();
+            } else if (Settings.DatabaseType == DatabaseTypes.MySql) {
+                kernel.Bind<IUserMethods>().To<DatabaseMethods.MySql.UserMethods>();
+            }
+        }
     }
 }
