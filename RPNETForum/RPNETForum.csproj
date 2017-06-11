@@ -260,6 +260,10 @@
       <Project>{a74ce8b1-8ed8-4303-a29d-d5603e548816}</Project>
       <Name>Settings</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SqliteDatabaseMethods\SqliteDatabaseMethods.csproj">
+      <Project>{214427d5-1c08-418f-8e07-f49d149da64f}</Project>
+      <Name>SqliteDatabaseMethods</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Validation\Validation.csproj">
       <Project>{24387d51-9535-48a3-916c-661c3bacca82}</Project>
       <Name>Validation</Name>
