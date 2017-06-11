@@ -65,6 +65,8 @@ namespace RPNETForum.App_Start {
                 kernel.Bind<IUserMethods>().To<DatabaseMethods.LiteDB.UserMethods>();
             } else if (Settings.DatabaseType == DatabaseTypes.MySql) {
                 kernel.Bind<IUserMethods>().To<DatabaseMethods.MySql.UserMethods>();
+            } else if (Settings.DatabaseType == DatabaseTypes.Sqlite) {
+                kernel.Bind<IUserMethods>().To<DatabaseMethods.Sqlite.UserMethods>();
             }
         }
     }

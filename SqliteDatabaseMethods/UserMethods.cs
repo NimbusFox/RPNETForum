@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using RPNETForum.Interfaces.DatabaseMethods;
+using RPNETForum.Interfaces.Users;
 using SQLite;
 
 namespace RPNETForum.DatabaseMethods.Sqlite {

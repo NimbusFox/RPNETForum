@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using Newtonsoft.Json;
 
 namespace RPNETForum.Validation {
     public static class UserValidation {
@@ -41,6 +43,20 @@ namespace RPNETForum.Validation {
             }
 
             return true;
+        }
+
+        public static bool IsValidReCaptcha(string response) {
+            //https://code.msdn.microsoft.com/Google-reCAPTCHA-in-ASPNET-f854c476
+            try {
+                var client = new WebClient();
+                var result =
+                    client.DownloadString(string.Format(
+                        "https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}",
+                        Settings.ReCaptchaPrivate, response));
+                return (bool) JsonConvert.DeserializeObject<Dictionary<string, object>>(result)["success"];
+            } catch {
+                return false;
+            }
         }
     }
 }

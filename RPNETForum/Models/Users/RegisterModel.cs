@@ -15,11 +15,13 @@ namespace RPNETForum.Models.Users {
         public Response Username { get; set; }
         public Response Password { get; set; }
         public Response Email { get; set; }
+        public Response ReCaptcha { get; set; }
 
         public RegisterResponseModel() {
             Username = new Response();
             Password = new Response();
             Email = new Response();
+            ReCaptcha = new Response();
         }
     }
 

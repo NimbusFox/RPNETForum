@@ -14,27 +14,37 @@ namespace RPNETForum {
 
         public static DatabaseTypes DatabaseType;
 
+        public static string ReCaptchaPublic;
+
+        public static string ReCaptchaPrivate;
+
         static Settings() {
             if (!Directory.Exists(HostingEnvironment.MapPath("~/App_Data/Settings"))) {
                 Directory.CreateDirectory(HostingEnvironment.MapPath("~/App_Data/Settings"));
             }
-            if (!File.Exists(HostingEnvironment.MapPath("~/App_Data/Settings/Settings.db"))) {
+            if (!File.Exists(HostingEnvironment.MapPath("~/App_Data/Settings/Settings.db3"))) {
                 OpenDatabase();
                 var defaultSettings = new Classes.Settings();
                 defaultSettings.DatabaseType = DatabaseTypes.LiteDB;
+                defaultSettings.ReCaptchaPrivate = "";
+                defaultSettings.ReCaptchaPublic = "";
                 var setting = _db.GetCollection<Classes.Settings>();
                 setting.Insert(defaultSettings);
             } else {
                 OpenDatabase();
             }
 
-            var settings = _db.GetCollection<Classes.Settings>();
+            var settings = _db.GetCollection<Classes.Settings>().FindAll().First();
 
-            DatabaseType = settings.FindAll().First().DatabaseType;
+            DatabaseType = settings.DatabaseType;
+
+            ReCaptchaPrivate = settings.ReCaptchaPrivate;
+
+            ReCaptchaPublic = settings.ReCaptchaPublic;
         }
 
         private static void OpenDatabase() {
-            _db = new LiteDatabase(HostingEnvironment.MapPath("~/App_Data/Settings/Settings.db"));
+            _db = new LiteDatabase(HostingEnvironment.MapPath("~/App_Data/Settings/Settings.db3"));
         }
     }
 }

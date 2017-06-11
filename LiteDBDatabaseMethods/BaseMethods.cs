@@ -20,7 +20,7 @@ namespace RPNETForum.DatabaseMethods.LiteDB {
                 Directory.CreateDirectory(HostingEnvironment.MapPath("~/App_Data/Database"));
             }
 
-            _db = new LiteDatabase(HostingEnvironment.MapPath("~/App_Data/Database/Database.db"));
+            _db = new LiteDatabase(HostingEnvironment.MapPath("~/App_Data/Database/Database.db3"));
 
             _userDB = _db.GetCollection<User>("Users");
             _sessionDB = _db.GetCollection<Session>("Sessions");

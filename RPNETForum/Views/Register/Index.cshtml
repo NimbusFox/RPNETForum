@@ -1,10 +1,49 @@
-﻿
+﻿@model Tuple<RPNETForum.Models.Users.RegisterModel, RPNETForum.Models.Users.RegisterResponseModel, bool>
 @{
     ViewBag.Title = "Index";
 }
+@if (Settings.ReCaptchaPublic != "" && Settings.ReCaptchaPrivate != "") {
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+}
 
-@Scripts.Render("~/Scripts/RPNETForum/Register.js")
-
-<div class="well">
-    <h3>Register</h3><br/><br/>
+<div class="container">
+    <form class="well col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2" action="~/Register" method="POST">
+        <h3>Register</h3><br><br>
+        <div class="row">
+            <div class="col-xs-3 control-label">Username</div>
+            <div class="col-xs-9">
+                <div class="form-group @Html.Raw(Model.Item3 ? "" : Model.Item2.Username.Success ? "has-success" : "has-error")">
+                    <input name="username" class="form-control" value="@Model.Item1.Username"><span class="control-label">@Html.Raw(Model.Item2.Username.Reason)</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3 control-label">Password</div>
+            <div class="col-xs-9">
+                <div class="form-group @Html.Raw(Model.Item3 ? "" : Model.Item2.Password.Success ? "has-success" : "has-error")">
+                    <input name="password" type="password" class="form-control"><span class="control-label">@Html.Raw(Model.Item2.Password.Reason)</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3 control-label">Confirm Password</div>
+            <div class="col-xs-9">
+                <div class="form-group">
+                    <input name="confirmPassword" type="password" class="form-control"><span class="control-label"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3 control-label">Email</div>
+            <div class="col-xs-9">
+                <div class="form-group @Html.Raw(Model.Item3 ? "" : Model.Item2.Email.Success ? "has-success" : "has-error")">
+                    <input name="email" class="form-control" value="@Model.Item1.Email"><span class="control-label">@Html.Raw(Model.Item2.Email.Reason)</span>
+                </div>
+            </div>
+        </div>
+        @if (Settings.ReCaptchaPublic != "" && Settings.ReCaptchaPrivate != "") {
+            <div class="g-recaptcha" data-sitekey="@Settings.ReCaptchaPublic"></div>
+        }
+        <input type="submit" class="btn btn-success pull-right" value="Register"><br><br>
+    </form>
 </div>
