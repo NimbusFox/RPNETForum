@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RPNETForum.Classes {
     public enum DatabaseTypes {
-        Sqlite,
+        LiteDB,
         MySql
     }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RPNETForum.Interfaces.DatabaseMethods;
+using RPNETForum.Interfaces.Users;
 
 namespace RPNETForum.DatabaseMethods.MySql {
     public class UserMethods : BaseMethods, IUserMethods {

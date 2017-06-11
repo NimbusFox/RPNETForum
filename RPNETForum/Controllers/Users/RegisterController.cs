@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using RPNETForum.Interfaces.DatabaseMethods;
 using RPNETForum.Models.Users;
+using RPNETForum.Validation;
 
 namespace RPNETForum.Controllers.Users {
     public class RegisterController : Controller {
@@ -29,7 +30,11 @@ namespace RPNETForum.Controllers.Users {
                 response.Username.Success = true;
             }
 
-            if (data.Password != data.ConfirmPassword) {
+            if (!UserValidation.IsValidPassword(data.Password)) {
+                response.Password.Success = false;
+                response.Password.Reason =
+                    "Password must contain:<br/>A Capital Letter<br/>A Lowercase Letter<br/>A Number<br/>A Special Character";
+            } else if (data.Password != data.ConfirmPassword) {
                 response.Password.Success = false;
                 response.Password.Reason = "The passwords do not match";
             } else {

@@ -30,5 +30,17 @@ namespace RPNETForum.Validation {
             hasher.Clear();
             return Convert.ToBase64String(hashedBytes);
         }
+
+        public static bool IsValidPassword(string password) {
+            if (password.Length < 6) {
+                return false;
+            }
+
+            if (!Regex.IsMatch(password, @"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{6,}$")) {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

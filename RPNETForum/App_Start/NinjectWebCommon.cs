@@ -61,8 +61,8 @@ namespace RPNETForum.App_Start {
                 Directory.CreateDirectory(HostingEnvironment.MapPath("~/App_Data"));
             }
 
-            if (Settings.DatabaseType == DatabaseTypes.Sqlite) {
-                kernel.Bind<IUserMethods>().To<DatabaseMethods.Sqlite.UserMethods>();
+            if (Settings.DatabaseType == DatabaseTypes.LiteDB) {
+                kernel.Bind<IUserMethods>().To<DatabaseMethods.LiteDB.UserMethods>();
             } else if (Settings.DatabaseType == DatabaseTypes.MySql) {
                 kernel.Bind<IUserMethods>().To<DatabaseMethods.MySql.UserMethods>();
             }

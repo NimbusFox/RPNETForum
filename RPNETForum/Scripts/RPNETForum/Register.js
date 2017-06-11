@@ -11,8 +11,8 @@ var RPNETForum;
             };
             var inputs = {};
             inputs["username"] = new FormInput($("<input>").addClass("form-control"), "Username");
-            inputs["password"] = new FormInput($("<input>").addClass("form-control"), "Password");
-            inputs["confirmPassword"] = new FormInput($("<input>").addClass("form-control"), "Confirm Password");
+            inputs["password"] = new FormInput($("<input>").attr("type", "password").addClass("form-control"), "Password");
+            inputs["confirmPassword"] = new FormInput($("<input>").attr("type", "password").addClass("form-control"), "Confirm Password");
             inputs["email"] = new FormInput($("<input>").addClass("form-control"), "Email");
             for (var item in inputs) {
                 if (inputs.hasOwnProperty(item)) {
@@ -38,7 +38,6 @@ var RPNETForum;
                             if (inputs.hasOwnProperty(item.toLowerCase()) && data.hasOwnProperty(item)) {
                                 var input = inputs[item.toLowerCase()];
                                 var currentData = data[item];
-                                console.log(currentData);
                                 input.container.removeClass("has-error");
                                 input.container.removeClass("has-success");
                                 input.label.text("");
@@ -48,7 +47,6 @@ var RPNETForum;
                                 else {
                                     input.container.addClass("has-error");
                                     input.label.html(currentData.Reason);
-                                    console.log(currentData.Reason);
                                 }
                             }
                         }
@@ -60,6 +58,8 @@ var RPNETForum;
         return Register;
     }());
     $(document).ready(function () {
+        // ReSharper disable once WrongExpressionStatement
         new Register();
     });
 })(RPNETForum || (RPNETForum = {}));
+//# sourceMappingURL=Register.js.map

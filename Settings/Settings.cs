@@ -5,33 +5,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Hosting;
+using LiteDB;
 using RPNETForum.Classes;
-using SQLite;
 
 namespace RPNETForum {
     public static class Settings {
-        private static SQLiteConnection _db;
+        private static LiteDatabase _db;
 
         public static DatabaseTypes DatabaseType;
 
         static Settings() {
-            if (!File.Exists(HostingEnvironment.MapPath("~/App_Data/Settings.db"))) {
+            if (!Directory.Exists(HostingEnvironment.MapPath("~/App_Data/Settings"))) {
+                Directory.CreateDirectory(HostingEnvironment.MapPath("~/App_Data/Settings"));
+            }
+            if (!File.Exists(HostingEnvironment.MapPath("~/App_Data/Settings/Settings.db"))) {
                 OpenDatabase();
-                _db.CreateTable<Classes.Settings>();
                 var defaultSettings = new Classes.Settings();
-                defaultSettings.DatabaseType = DatabaseTypes.Sqlite;
-                _db.Insert(defaultSettings);
+                defaultSettings.DatabaseType = DatabaseTypes.LiteDB;
+                var setting = _db.GetCollection<Classes.Settings>();
+                setting.Insert(defaultSettings);
             } else {
                 OpenDatabase();
             }
 
-            var settings = _db.Table<Classes.Settings>().First();
+            var settings = _db.GetCollection<Classes.Settings>();
 
-            DatabaseType = settings.DatabaseType;
+            DatabaseType = settings.FindAll().First().DatabaseType;
         }
 
         private static void OpenDatabase() {
-            _db = new SQLiteConnection(HostingEnvironment.MapPath("~/App_Data/Settings.db"));
+            _db = new LiteDatabase(HostingEnvironment.MapPath("~/App_Data/Settings/Settings.db"));
         }
     }
 }

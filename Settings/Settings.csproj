@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LiteDB, Version=3.1.0.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiteDB.3.1.1\lib\net35\LiteDB.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
     </Reference>
@@ -121,10 +124,6 @@
     <ProjectReference Include="..\Classes\Classes.csproj">
       <Project>{6bdcbb69-c834-491e-bddb-c8ba3a7d0f23}</Project>
       <Name>Classes</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SQLite\SQLite.csproj">
-      <Project>{24771CAF-A371-4093-89E3-6074911F2A95}</Project>
-      <Name>SQLite</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -3,7 +3,7 @@
 
     class Register {
         constructor() {
-            var submission: server.registerModel = {
+            var submission = {
                 username: "",
                 password: "",
                 confirmPassword: "",
@@ -14,9 +14,9 @@
 
             inputs["username"] = new FormInput($("<input>").addClass("form-control"), "Username");
 
-            inputs["password"] = new FormInput($("<input>").addClass("form-control"), "Password");
+            inputs["password"] = new FormInput($("<input>").attr("type", "password").addClass("form-control"), "Password");
 
-            inputs["confirmPassword"] = new FormInput($("<input>").addClass("form-control"), "Confirm Password");
+            inputs["confirmPassword"] = new FormInput($("<input>").attr("type", "password").addClass("form-control"), "Confirm Password");
 
             inputs["email"] = new FormInput($("<input>").addClass("form-control"), "Email");
 
@@ -47,13 +47,11 @@
                     type: "POST",
                     dataType: "json",
                     data: submission,
-                    success: (data: server.registerResponseModel) => {
+                    success: (data) => {
                         for (var item in data) {
                             if (inputs.hasOwnProperty(item.toLowerCase()) && data.hasOwnProperty(item)) {
                                 var input = inputs[item.toLowerCase()];
-                                var currentData: server.response = data[item];
-
-                                console.log(currentData);
+                                var currentData = data[item];
 
                                 input.container.removeClass("has-error");
                                 input.container.removeClass("has-success");
@@ -64,8 +62,6 @@
                                 } else {
                                     input.container.addClass("has-error");
                                     input.label.html(currentData.Reason);
-
-                                    console.log(currentData.Reason);
                                 }
                             }
                         }
