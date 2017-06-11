@@ -60,8 +60,6 @@ var RPNETForum;
         return Register;
     }());
     $(document).ready(function () {
-        // ReSharper disable once WrongExpressionStatement
         new Register();
     });
 })(RPNETForum || (RPNETForum = {}));
-//# sourceMappingURL=Register.js.map
