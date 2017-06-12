@@ -9,25 +9,27 @@ using RPNETForum.Interfaces.Users;
 
 namespace RPNETForum.DatabaseMethods.LiteDB {
     public class UserMethods : BaseMethods, IUserMethods {
+
         public bool UserExists(string name) {
             if (_userDB.Count() == 0) {
                 return false;
             }
-            return _userDB.Exists(x => string.Equals(x.Username, name, StringComparison.CurrentCultureIgnoreCase));
+
+            return _userDB.FindAll().Any(user => string.Equals(user.Username, name, StringComparison.CurrentCultureIgnoreCase));
         }
 
         public bool UserExists(int id) {
             if (_userDB.Count() == 0) {
                 return false;
             }
-            return _userDB.Exists(x => x.UID == id);
+            return _userDB.Exists(x => x.Id == id);
         }
 
         public bool DisplayNameExists(string name) {
             if (_userDB.Count() == 0) {
                 return false;
             }
-            return _userDB.Exists(x => x.Username == name);
+            return _userDB.FindAll().Any(user => string.Equals(user.DisplayName, name, StringComparison.CurrentCultureIgnoreCase));
         }
 
         public bool EmailExists(string email) {
@@ -38,11 +40,11 @@ namespace RPNETForum.DatabaseMethods.LiteDB {
         }
 
         public bool IsVerified(string username) {
-            return _userDB.FindOne(x => x.Username == username).Verified;
+            return _userDB.FindAll().Any(user => string.Equals(user.Username, username, StringComparison.CurrentCultureIgnoreCase) && user.Verified);
         }
 
         public bool IsVerified(int uid) {
-            return _userDB.FindOne(x => x.UID == uid).Verified;
+            return _userDB.FindOne(x => x.Id == uid).Verified;
         }
 
         public void AddVerification(int uid, string token) {
@@ -54,37 +56,41 @@ namespace RPNETForum.DatabaseMethods.LiteDB {
             _verificationDB.Insert(verification);
         }
 
-        public void Verify(string token) {
+        public bool Verify(string token) {
             if (_verificationDB.Exists(x => x.VerificationToken == token)) {
                 var verification = _verificationDB.FindOne(x => x.VerificationToken == token);
 
-                if (_userDB.Exists(x => x.UID == verification.UID)) {
-                    var user = _userDB.FindOne(x => x.UID == verification.UID);
+                if (_userDB.Exists(x => x.Id == verification.UID)) {
+                    var user = _userDB.FindOne(x => x.Id == verification.UID);
 
                     user.Verified = true;
 
                     _userDB.Update(user);
 
                     _verificationDB.Delete(x => x.VerificationToken == token);
+
+                    return true;
                 }
+
+                return false;
             }
+
+            return false;
         }
 
         public void CreateUser(IUser user) {
-            if (!_userDB.Exists(x => x.UID == user.UID)) {
-                _userDB.Insert((User)user);
-            }
+            _userDB.Insert((User)user);
         }
 
         public void UpdateUser(IUser user) {
-            if (_userDB.Exists(x => x.UID == user.UID)) {
+            if (_userDB.Exists(x => x.Id == user.Id)) {
                 _userDB.Update((User) user);
             }
         }
 
         public void RemoveUser(IUser user) {
-            if (_userDB.Exists(x => x.UID == user.UID)) {
-                _userDB.Delete(x => x.UID == user.UID);
+            if (_userDB.Exists(x => x.Id == user.Id)) {
+                _userDB.Delete(x => x.Id == user.Id);
             }
         }
 
@@ -103,23 +109,19 @@ namespace RPNETForum.DatabaseMethods.LiteDB {
 
             var uid = _sessionDB.FindOne(x => x.SessionToken == token).UID;
 
-            return !_userDB.Exists(x => x.UID == uid) ? null : _userDB.FindOne(x => x.UID == uid);
+            return !_userDB.Exists(x => x.Id == uid) ? null : _userDB.FindOne(x => x.Id == uid);
         }
 
         public IUser GetUserByID(int uid) {
-            if (!_userDB.Exists(x => x.UID == uid)) {
-                return null;
-            }
-
-            return _userDB.FindOne(x => x.UID == uid);
+            return !UserExists(uid) ? null : _userDB.FindOne(x => x.Id == uid);
         }
 
         public IUser GetUserByUsername(string username) {
-            if (!_userDB.Exists(x => x.Username == username)) {
-                return null;
-            }
+            return !UserExists(username) ? null : _userDB.FindAll().First(x => x.Username.ToLower() == username.ToLower());
+        }
 
-            return _userDB.FindOne(x => x.Username == username);
+        public IUser GetUserByEmail(string email) {
+            return !EmailExists(email) ? null : _userDB.FindOne(x => x.Email == email);
         }
     }
 }

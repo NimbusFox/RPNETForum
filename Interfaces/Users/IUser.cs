@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RPNETForum.Interfaces.Users {
     public interface IUser {
-        int UID { get; set; }
+        int Id { get; set; }
         string Username { get; set; }
         string DisplayName { get; set; }
         string Salt { get; set; }

@@ -18,7 +18,7 @@ namespace RPNETForum.Validation {
 
         private static Random random = new Random();
         public static string GenerateSalt() {
-            var length = random.Next(32);
+            var length = random.Next(8, 64);
             // https://stackoverflow.com/a/1344242
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             return new string(Enumerable.Repeat(chars, length)

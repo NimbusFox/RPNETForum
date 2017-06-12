@@ -14,7 +14,7 @@ namespace RPNETForum.DatabaseMethods.Sqlite {
         private class UserDB : IUser {
             [PrimaryKey]
             [AutoIncrement]
-            public int UID { get; set; }
+            public int Id { get; set; }
             [Unique]
             public string Username { get; set; }
             [Unique]
@@ -47,7 +47,7 @@ namespace RPNETForum.DatabaseMethods.Sqlite {
         }
 
         public bool UserExists(int id) {
-            return _db.Table<UserDB>().Any(x => x.UID == id);
+            return _db.Table<UserDB>().Any(x => x.Id == id);
         }
 
         public bool DisplayNameExists(string name) {
@@ -64,7 +64,7 @@ namespace RPNETForum.DatabaseMethods.Sqlite {
         }
 
         public bool IsVerified(int uid) {
-            return _db.Table<UserDB>().First(x => x.UID == uid).Verified;
+            return _db.Table<UserDB>().First(x => x.Id == uid).Verified;
         }
 
         public void AddVerification(int uid, string token) {
@@ -76,17 +76,21 @@ namespace RPNETForum.DatabaseMethods.Sqlite {
             _db.Insert(verification);
         }
 
-        public void Verify(string token) {
+        public bool Verify(string token) {
             if (_db.Table<VerificationDB>().Any(x => x.VerificationToken == token)) {
                 var user = _db.Table<UserDB>()
-                    .First(x => x.UID == _db.Table<VerificationDB>().First(y => y.VerificationToken == token).UID);
+                    .First(x => x.Id == _db.Table<VerificationDB>().First(y => y.VerificationToken == token).UID);
 
                 user.Verified = true;
 
                 _db.Update(user);
 
                 _db.Delete(_db.Table<VerificationDB>().First(y => y.VerificationToken == token));
+
+                return true;
             }
+
+            return false;
         }
 
         public void CreateUser(IUser user) {
@@ -116,23 +120,19 @@ namespace RPNETForum.DatabaseMethods.Sqlite {
 
             var sessionUID = _db.Table<SessionDB>().First(x => x.SessionToken == token).UID;
 
-            return _db.Table<UserDB>().First(x => x.UID == sessionUID);
+            return _db.Table<UserDB>().First(x => x.Id == sessionUID);
         }
 
         public IUser GetUserByID(int uid) {
-            if (!_db.Table<UserDB>().Any(x => x.UID == uid)) {
-                return null;
-            }
-
-            return _db.Table<UserDB>().First(x => x.UID == uid);
+            return !UserExists(uid) ? null : _db.Table<UserDB>().First(x => x.Id == uid);
         }
 
         public IUser GetUserByUsername(string username) {
-            if (!_db.Table<UserDB>().Any(x => x.Username == username)) {
-                return null;
-            }
+            return !UserExists(username) ? null : _db.Table<UserDB>().First(x => x.Username == username);
+        }
 
-            return _db.Table<UserDB>().First(x => x.Username == username);
+        public IUser GetUserByEmail(string email) {
+            return !EmailExists(email) ? null : _db.Table<UserDB>().First(x => x.Email == email);
         }
     }
 }

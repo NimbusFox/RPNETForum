@@ -36,7 +36,7 @@ namespace RPNETForum.DatabaseMethods.MySql {
             throw new NotImplementedException();
         }
 
-        public void Verify(string troken) {
+        public bool Verify(string troken) {
             throw new NotImplementedException();
         }
 
@@ -69,6 +69,10 @@ namespace RPNETForum.DatabaseMethods.MySql {
         }
 
         public IUser GetUserByUsername(string username) {
+            throw new NotImplementedException();
+        }
+
+        public IUser GetUserByEmail(string email) {
             throw new NotImplementedException();
         }
     }

@@ -8,7 +8,7 @@ using RPNETForum.Interfaces.Users;
 
 namespace RPNETForum.Classes.Users {
     public class User : IUser {
-        public int UID { get; set; }
+        public int Id { get; set; }
         public string Username { get; set; }
         public string DisplayName { get; set; }
         public string Salt { get; set; }

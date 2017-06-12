@@ -63,10 +63,13 @@ namespace RPNETForum.App_Start {
 
             if (Settings.DatabaseType == DatabaseTypes.LiteDB) {
                 kernel.Bind<IUserMethods>().To<DatabaseMethods.LiteDB.UserMethods>();
+                kernel.Bind<IEmailTemplateMethods>().To<DatabaseMethods.LiteDB.EmailTemplateMethods>();
             } else if (Settings.DatabaseType == DatabaseTypes.MySql) {
                 kernel.Bind<IUserMethods>().To<DatabaseMethods.MySql.UserMethods>();
+                kernel.Bind<IEmailTemplateMethods>().To<DatabaseMethods.MySql.EmailTemplateMethods>();
             } else if (Settings.DatabaseType == DatabaseTypes.Sqlite) {
                 kernel.Bind<IUserMethods>().To<DatabaseMethods.Sqlite.UserMethods>();
+                kernel.Bind<IEmailTemplateMethods>().To<DatabaseMethods.Sqlite.EmailTemplateMethods>();
             }
         }
     }

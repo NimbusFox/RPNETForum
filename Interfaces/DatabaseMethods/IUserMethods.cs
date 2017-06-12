@@ -14,7 +14,7 @@ namespace RPNETForum.Interfaces.DatabaseMethods {
         bool IsVerified(string username);
         bool IsVerified(int uid);
         void AddVerification(int uid, string token);
-        void Verify(string token);
+        bool Verify(string token);
         void CreateUser(IUser user);
         void UpdateUser(IUser user);
         void RemoveUser(IUser user);
@@ -23,5 +23,6 @@ namespace RPNETForum.Interfaces.DatabaseMethods {
         IUser GetCurrentUser(string token);
         IUser GetUserByID(int uid);
         IUser GetUserByUsername(string username);
+        IUser GetUserByEmail(string email);
     }
 }

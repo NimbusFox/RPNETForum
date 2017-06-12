@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using RPNETForum.Classes.Models.Users;
 using RPNETForum.Interfaces.DatabaseMethods;
-using RPNETForum.Models.Users;
 using RPNETForum.Validation;
 
 namespace RPNETForum.Controllers.Users {
     public class RegisterController : Controller {
         private IUserMethods _userMethods;
+        private IEmailTemplateMethods _emailTemplateMethods;
 
-        public RegisterController(IUserMethods userMethods) {
+        public RegisterController(IUserMethods userMethods, IEmailTemplateMethods emailTemplateMethods) {
             _userMethods = userMethods;
+            _emailTemplateMethods = emailTemplateMethods;
         }
-
 
         public ActionResult Index() {
             return View(new Tuple<RegisterModel, RegisterResponseModel, bool>(new RegisterModel(), new RegisterResponseModel(), true));
@@ -63,6 +64,9 @@ namespace RPNETForum.Controllers.Users {
             if (!UserValidation.IsValidEmail(data.Email)) {
                 response.Email.Success = false;
                 response.Email.Reason = "Invalid email address";
+            } else if (_userMethods.EmailExists(data.Email)) {
+                response.Email.Success = false;
+                response.Email.Reason = "Email address already in use";
             } else {
                 response.Email.Success = true;
             }
@@ -70,8 +74,7 @@ namespace RPNETForum.Controllers.Users {
             if (!response.IsValidRegistration()) {
                 return View(new Tuple<RegisterModel, RegisterResponseModel, bool>(data, response, false));
             }
-
-            Email.Send("Registration", data.Email, "{username}", new Dictionary<string, string> {{"username", "<a href='/'>" + data.Username + "</a>"}});
+            RPNETForum.Users.Create(data, _userMethods, _emailTemplateMethods);
 
             return View("Complete");
         }

@@ -5,11 +5,12 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using RPNETForum.Interfaces.DatabaseMethods;
 
 namespace RPNETForum {
     public static class Email {
         public static void Send(string subject, string toAddress, string template,
-            Dictionary<string, string> templateVariables) {
+            Dictionary<string, string> templateVariables, IEmailTemplateMethods emailTemplateMethods) {
             var client = new SmtpClient(Settings.SmtpHost, Settings.SmtpPort);
 
             client.Credentials = new NetworkCredential(Settings.SmtpUser, Settings.SmtpPassword);
@@ -22,7 +23,7 @@ namespace RPNETForum {
 
             message.IsBodyHtml = true;
 
-            var body = template;
+            var body = emailTemplateMethods.GetTemplate(template);
 
             foreach (var identifier in templateVariables.Keys) {
                 if (body.Contains("{" + identifier + "}")) {

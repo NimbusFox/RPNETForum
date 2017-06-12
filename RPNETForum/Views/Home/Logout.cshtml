@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Logout";
+}
+<script>
+     $(document).ready(function() {
+         setTimeout(function() {
+             document.location.href = "http://@RPNETForum.Session.CurrentContext.Request.Url.Host/";
+         }, 3000);
+     });
+ </script>
+
+<center>
+    <h3>Logged out</h3>
+    You were successfully logged out
+</center>
