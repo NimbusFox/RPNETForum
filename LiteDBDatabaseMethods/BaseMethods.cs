@@ -13,7 +13,6 @@ namespace RPNETForum.DatabaseMethods.LiteDB {
     public class BaseMethods {
         protected LiteDatabase _db;
         protected LiteCollection<User> _userDB;
-        protected LiteCollection<Session> _sessionDB;
         protected LiteCollection<Verification> _verificationDB;
         protected LiteCollection<EmailTemplate> _emailTemplateDB;
 
@@ -25,7 +24,6 @@ namespace RPNETForum.DatabaseMethods.LiteDB {
             _db = new LiteDatabase(HostingEnvironment.MapPath("~/App_Data/Database/Database.db3"));
 
             _userDB = _db.GetCollection<User>("Users");
-            _sessionDB = _db.GetCollection<Session>("Sessions");
             _verificationDB = _db.GetCollection<Verification>("Verifications");
             _emailTemplateDB = _db.GetCollection<EmailTemplate>("EmailTemplates");
         }

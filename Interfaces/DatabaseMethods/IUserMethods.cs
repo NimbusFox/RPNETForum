@@ -20,7 +20,6 @@ namespace RPNETForum.Interfaces.DatabaseMethods {
         void RemoveUser(IUser user);
         int CountUsers();
         IUser GetLastUser();
-        IUser GetCurrentUser(string token);
         IUser GetUserByID(int uid);
         IUser GetUserByUsername(string username);
         IUser GetUserByEmail(string email);

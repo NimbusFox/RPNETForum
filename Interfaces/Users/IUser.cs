@@ -13,6 +13,8 @@ namespace RPNETForum.Interfaces.Users {
         string Password { get; set; }
         string Email { get; set; }
         bool Verified { get; set; }
+        bool HasGravatar { get; set; }
+        string ProfilePic { get; set; }
     }
 
     public interface ISession {

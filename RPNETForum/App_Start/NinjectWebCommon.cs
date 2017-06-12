@@ -1,6 +1,7 @@
 using System.Web.Hosting;
 using RPNETForum.Classes;
 using RPNETForum.Interfaces.DatabaseMethods;
+using RPNETForum.Validation;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(RPNETForum.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(RPNETForum.App_Start.NinjectWebCommon), "Stop")]
@@ -71,6 +72,8 @@ namespace RPNETForum.App_Start {
                 kernel.Bind<IUserMethods>().To<DatabaseMethods.Sqlite.UserMethods>();
                 kernel.Bind<IEmailTemplateMethods>().To<DatabaseMethods.Sqlite.EmailTemplateMethods>();
             }
+
+            new Users(kernel.Get<IUserMethods>(), kernel.Get<IEmailTemplateMethods>());
         }
     }
 }

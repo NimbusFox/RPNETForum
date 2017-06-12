@@ -102,16 +102,6 @@ namespace RPNETForum.DatabaseMethods.LiteDB {
             return _userDB.FindAll().Last();
         }
 
-        public IUser GetCurrentUser(string token) {
-            if (!_sessionDB.Exists(x => x.SessionToken == token)) {
-                return null;
-            }
-
-            var uid = _sessionDB.FindOne(x => x.SessionToken == token).UID;
-
-            return !_userDB.Exists(x => x.Id == uid) ? null : _userDB.FindOne(x => x.Id == uid);
-        }
-
         public IUser GetUserByID(int uid) {
             return !UserExists(uid) ? null : _userDB.FindOne(x => x.Id == uid);
         }

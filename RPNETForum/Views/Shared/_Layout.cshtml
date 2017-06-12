@@ -23,12 +23,14 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    @if (!Users.LoggedIn) {
+                    @if (!UserSession.IsLoggedIn) {
                         <li>@Html.ActionLink("Login", "Index", "Login")</li>
                         <li>@Html.ActionLink("Register", "Index", "Register")</li>
                     } else {
                         <li class="dropdown">
-                            <a data-toggle="dropdown" role="button" aria-expanded="False" class="dropdown-toggle">@RPNETForum.Session.CurrentUser.DisplayName<span class="caret"></span></a>
+                            <a data-toggle="dropdown" role="button" aria-expanded="False" class="dropdown-toggle">
+                                <img alt="@UserSession.CurrentUser.DisplayName" src="@UserSession.CurrentUser.GetProfilePic()" height="18px" width="18px"/> @UserSession.CurrentUser.DisplayName<span class="caret"></span>
+                            </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
                             </ul>

@@ -74,7 +74,7 @@ namespace RPNETForum.Controllers.Users {
             if (!response.IsValidRegistration()) {
                 return View(new Tuple<RegisterModel, RegisterResponseModel, bool>(data, response, false));
             }
-            RPNETForum.Users.Create(data, _userMethods, _emailTemplateMethods);
+            RPNETForum.Users.Create(data);
 
             return View("Complete");
         }

@@ -24,6 +24,8 @@ namespace RPNETForum.DatabaseMethods.Sqlite {
             [Unique]
             public string Email { get; set; }
             public bool Verified { get; set; }
+            public bool HasGravatar { get; set; }
+            public string ProfilePic { get; set; }
         }
 
         private class SessionDB: ISession {

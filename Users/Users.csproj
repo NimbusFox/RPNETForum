@@ -64,6 +64,10 @@
       <Project>{cfeaf04c-c6a9-4351-9732-0e9c6a0f3874}</Project>
       <Name>Session</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Settings\Settings.csproj">
+      <Project>{a74ce8b1-8ed8-4303-a29d-d5603e548816}</Project>
+      <Name>Settings</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Validation\Validation.csproj">
       <Project>{24387d51-9535-48a3-916c-661c3bacca82}</Project>
       <Name>Validation</Name>

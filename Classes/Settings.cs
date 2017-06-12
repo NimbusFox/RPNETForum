@@ -19,5 +19,6 @@ namespace RPNETForum.Classes {
         public string SmtpUser { get; set; }
         public string SmtpPassword { get; set; }
         public int SmtpPort { get; set; }
+        public string Url { get; set; }
     }
 }

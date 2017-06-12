@@ -23,6 +23,8 @@ namespace RPNETForum {
         public static string SmtpPassword;
         public static int SmtpPort;
 
+        public static string Url;
+
         static Settings() {
             if (!Directory.Exists(HostingEnvironment.MapPath("~/App_Data/Settings"))) {
                 Directory.CreateDirectory(HostingEnvironment.MapPath("~/App_Data/Settings"));
@@ -37,6 +39,7 @@ namespace RPNETForum {
                 defaultSettings.SmtpUser = "";
                 defaultSettings.SmtpPassword = "";
                 defaultSettings.SmtpPort = 25;
+                defaultSettings.Url = "";
                 var setting = _db.GetCollection<Classes.Settings>();
                 setting.Insert(defaultSettings);
             } else {
@@ -55,6 +58,8 @@ namespace RPNETForum {
             SmtpUser = settings.SmtpUser;
             SmtpPassword = settings.SmtpPassword;
             SmtpPort = settings.SmtpPort;
+
+            Url = settings.Url;
         }
 
         private static void OpenDatabase() {
