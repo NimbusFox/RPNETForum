@@ -67,7 +67,13 @@ namespace RPNETForum.Controllers.Users {
                 response.Email.Success = true;
             }
 
-            return View(new Tuple<RegisterModel, RegisterResponseModel, bool>(data, response, false));
+            if (!response.IsValidRegistration()) {
+                return View(new Tuple<RegisterModel, RegisterResponseModel, bool>(data, response, false));
+            }
+
+            Email.Send("Registration", data.Email, "{username}", new Dictionary<string, string> {{"username", "<a href='/'>" + data.Username + "</a>"}});
+
+            return View("Complete");
         }
     }
 }

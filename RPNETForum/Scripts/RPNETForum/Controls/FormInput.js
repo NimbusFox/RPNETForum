@@ -15,3 +15,4 @@ var RPNETForum;
         Controls.FormInput = FormInput;
     })(Controls = RPNETForum.Controls || (RPNETForum.Controls = {}));
 })(RPNETForum || (RPNETForum = {}));
+//# sourceMappingURL=FormInput.js.map

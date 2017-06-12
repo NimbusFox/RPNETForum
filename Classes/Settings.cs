@@ -7,13 +7,17 @@ using System.Threading.Tasks;
 namespace RPNETForum.Classes {
     public enum DatabaseTypes {
         LiteDB,
-        Sqlite,
-        MySql
+        MySql,
+        Sqlite
     }
 
     public class Settings {
         public DatabaseTypes DatabaseType { get; set; }
         public string ReCaptchaPublic { get; set; }
         public string ReCaptchaPrivate { get; set; }
+        public string SmtpHost { get; set; }
+        public string SmtpUser { get; set; }
+        public string SmtpPassword { get; set; }
+        public int SmtpPort { get; set; }
     }
 }

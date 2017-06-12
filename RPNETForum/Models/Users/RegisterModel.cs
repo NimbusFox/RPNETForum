@@ -23,6 +23,10 @@ namespace RPNETForum.Models.Users {
             Email = new Response();
             ReCaptcha = new Response();
         }
+
+        public bool IsValidRegistration() {
+            return Username.Success && Password.Success && Email.Success && ReCaptcha.Success;
+        }
     }
 
     public class Response {
