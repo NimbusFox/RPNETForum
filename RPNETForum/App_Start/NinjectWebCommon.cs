@@ -1,5 +1,6 @@
 using System.Web.Hosting;
 using RPNETForum.Classes;
+using RPNETForum.Classes.Forum;
 using RPNETForum.Interfaces.DatabaseMethods;
 using RPNETForum.Validation;
 
@@ -15,6 +16,7 @@ namespace RPNETForum.App_Start {
     using Ninject;
     using Ninject.Web.Common;
     using System.IO;
+    using System.Collections.Generic;
 
     public static class NinjectWebCommon {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
@@ -93,6 +95,17 @@ namespace RPNETForum.App_Start {
 
             if (kernel.Get<ICategoryMethods>().CountCategories() == 0) {
                 kernel.Get<ICategoryMethods>().CreateCategory(1, "First Category", "A demo description");
+            }
+
+            if (kernel.Get<IForumMethods>().CountForums() == 0) {
+                kernel.Get<IForumMethods>().AddForum(new Forum {
+                    Banned = new List<int>(),
+                    CategoryID = 1,
+                    Creator = 1,
+                    Description = "A demo description",
+                    Name = "First Forum",
+                    Permissions = new ForumPermissions()
+                });
             }
 
             new Users(kernel.Get<IUserMethods>(), kernel.Get<IEmailTemplateMethods>());

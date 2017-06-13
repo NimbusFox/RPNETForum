@@ -18,14 +18,20 @@ namespace RPNETForum {
 
             routes.MapRoute(
                 name: "Profile",
-                url: "User-{id}.html",
-                defaults: new {controller = "Profile", action = "Index", id = -1}
+                url: "User/{id}",
+                defaults: new {controller = "Profile", action = "Index", id = ""}
             );
 
             routes.MapRoute(
                 name: "Verify",
                 url: "Verify/{token}",
                 defaults: new { controller = "Home", action = "Verify", token = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Forum",
+                url: "Forum/{id}",
+                defaults: new {controller = "Forum", action = "Index", id = -1}
             );
 
             routes.MapRoute(

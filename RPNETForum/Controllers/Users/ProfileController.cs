@@ -16,10 +16,17 @@ namespace RPNETForum.Controllers.Users {
             _userMethods = userMethods;
         }
 
-        public ActionResult Index(int id) {
-            if (_userMethods.UserExists(id)) {
-                UserSession.PreviousURL = UserSession.CurrentContext.Request.RawUrl;
-                return View((User)_userMethods.GetUserByID(id));
+        public ActionResult Index(string id) {
+            if (int.TryParse(id, out int userID)) {
+                if (_userMethods.UserExists(userID)) {
+                    UserSession.PreviousURL = UserSession.CurrentContext.Request.RawUrl;
+                    return View("Index", (User) _userMethods.GetUserByID(userID));
+                }
+            } else {
+                if (_userMethods.DisplayNameExists(id)) {
+                    UserSession.PreviousURL = UserSession.CurrentContext.Request.RawUrl;
+                    return View("Index", (User)_userMethods.GetUserByDisplayName(id));
+                }
             }
             return View("Redirect", new RedirectModel {
                 Message = "There is no user with this ID",

@@ -1,16 +1,21 @@
-﻿@model List<RPNETForum.Interfaces.Forum.ICategory>
+﻿@model Tuple<List<RPNETForum.Interfaces.Forum.ICategory>, Dictionary<int, List<RPNETForum.Interfaces.Forum.IForum>>>
 @{
     ViewBag.Title = "Index";
 }
 
-@foreach (var category in Model) {
+@foreach (var category in Model.Item1) {
     var description = string.IsNullOrWhiteSpace(@category.Description) ? "" : " - " + category.Description;
-    <div class="panel panel-primary">
+    <div class="panel panel-primary list-group">
         <div class="panel-heading">
             <h3 class="panel-title">@category.Name@description</h3>
         </div>
-        <div class="panel-body">
-            A demo category
-        </div>
+        @if (Model.Item2.ContainsKey(category.Id)) {
+            foreach (var forum in Model.Item2[category.Id]) {
+                <a href="~/Forum/@forum.Id" class="panel-body list-group-item">
+                    <h4 class="list-group-item-heading">@forum.Name</h4>
+                    <p class="list-group-item-text">@forum.Description</p>
+                </a>
+            }
+        }
     </div>
 }

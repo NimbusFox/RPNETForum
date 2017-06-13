@@ -140,5 +140,9 @@ namespace RPNETForum.DatabaseMethods.LiteDB {
 
             return !UserExists(uid) ? null : _userDB.FindOne(x => x.Id == uid);
         }
+
+        public IUser GetUserByDisplayName(string displayname) {
+            return !UserExists(displayname) ? null : _userDB.FindAll().First(x => x.DisplayName.ToLower() == displayname.ToLower());
+        }
     }
 }

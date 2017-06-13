@@ -8,6 +8,7 @@ namespace RPNETForum.Interfaces.Forum {
 
     public interface IForum {
         int Id { get; set; }
+        int CategoryID { get; set; }
         int Creator { get; set; }
         string Name { get; set; }
         string Description { get; set; }

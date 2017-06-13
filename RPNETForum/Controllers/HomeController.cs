@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using RPNETForum.Classes.Forum;
 using RPNETForum.Classes.Models;
 using RPNETForum.Interfaces.DatabaseMethods;
+using RPNETForum.Interfaces.Forum;
 
 namespace RPNETForum.Controllers {
     public class HomeController : Controller {
@@ -20,7 +22,13 @@ namespace RPNETForum.Controllers {
 
         public ActionResult Index() {
             var catergories = _categoryMethods.GetCategories();
-            return View(catergories);
+            var forums = new Dictionary<int, List<IForum>>();
+
+            foreach (var catergory in catergories) {
+                forums.Add(catergory.Id, _forumMethods.GetForums(catergory.Id));
+            }
+
+            return View(new Tuple<List<ICategory>, Dictionary<int, List<IForum>>>(catergories, forums));
         }
 
         public ActionResult Verify(string token) {

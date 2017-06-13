@@ -27,5 +27,6 @@ namespace RPNETForum.Interfaces.DatabaseMethods {
         IUser GetUserByUsername(string username);
         IUser GetUserByEmail(string email);
         IUser GetUserBySession(string token);
+        IUser GetUserByDisplayName(string displayname);
     }
 }

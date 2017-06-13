@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using RPNETForum.Extensions.Users
+<!DOCTYPE html>
 <html>
 <head>
     @{
@@ -17,12 +18,12 @@
                         <img src="@UserSession.CurrentUser.GetProfilePic()" height="75px" width="75px" alt="@UserSession.CurrentUser.DisplayName" />
                     </div>
                     <div class="row" style="margin-left: 10px; display: inline-block">
-                        <a href="@Settings.Url/@Html.Raw("User-" + UserSession.CurrentUser.Id + ".html")">@UserSession.CurrentUser.DisplayName</a> (<a href="~/Logout">Logout</a>)
+                        <a href="@Settings.Url/User/@UserSession.CurrentUser.Id">@UserSession.CurrentUser.DisplayName</a> (<a href="~/Logout">Logout</a>)
                         <br />
                         <i>Last login: @UserSession.CurrentUser.LastLogin.ToLongDateString() @UserSession.CurrentUser.LastLogin.ToLongTimeString()</i>
                     </div>
                 } else {
-                    <a href="~/Login">Login</a> @Html.Raw("|") <a href="~/Register">Regster</a>
+                    <a href="~/Login">Login</a> @Html.Raw("|") <a href="~/Register">Register</a>
                 }
             </div>
         </div>

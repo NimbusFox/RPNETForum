@@ -1,4 +1,5 @@
-﻿@model RPNETForum.Classes.Users.User
+﻿@using RPNETForum.Extensions.Users
+@model RPNETForum.Classes.Users.User
 @{
     ViewBag.Title = Model.DisplayName + "'" + (Model.DisplayName[Model.DisplayName.Length - 1] == 's' ? "" : "s") + " Profile";
 }

@@ -154,5 +154,9 @@ namespace RPNETForum.DatabaseMethods.Sqlite {
         public IUser GetUserBySession(string token) {
             throw new NotImplementedException();
         }
+
+        public IUser GetUserByDisplayName(string displayname) {
+            throw new NotImplementedException();
+        }
     }
 }
