@@ -11,6 +11,12 @@ namespace RPNETForum {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "Logout",
+                url: "Logout",
+                defaults: new {controller = "Home", action = "Logout"}
+            );
+
+            routes.MapRoute(
                 name: "Profile",
                 url: "User-{id}.html",
                 defaults: new {controller = "Profile", action = "Index", id = -1}

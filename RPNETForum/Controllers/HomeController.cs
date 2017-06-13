@@ -38,7 +38,7 @@ namespace RPNETForum.Controllers {
             return View("Redirect", new RedirectModel {
                 Message = "You have been successfully logged out",
                 RedirectSeconds = 3,
-                RedirectTo = Settings.Url,
+                RedirectTo = string.IsNullOrWhiteSpace(UserSession.PreviousURL) || string.IsNullOrWhiteSpace(UserSession.PreviousURL) ? Settings.Url : UserSession.PreviousURL,
                 Title = "Logged out"
             });
         }

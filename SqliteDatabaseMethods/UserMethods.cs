@@ -27,6 +27,7 @@ namespace RPNETForum.DatabaseMethods.Sqlite {
             public bool HasGravatar { get; set; }
             public string ProfilePic { get; set; }
             public DateTime LastLogin { get; set; }
+            public DateTime RegistrationDate { get; set; }
         }
 
         private class SessionDB: ISession {

@@ -18,6 +18,7 @@ namespace RPNETForum.Controllers.Users {
 
         public ActionResult Index(int id) {
             if (_userMethods.UserExists(id)) {
+                UserSession.PreviousURL = UserSession.CurrentContext.Request.RawUrl;
                 return View((User)_userMethods.GetUserByID(id));
             }
             return View("Redirect", new RedirectModel {

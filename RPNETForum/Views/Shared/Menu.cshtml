@@ -1,0 +1,31 @@
+﻿<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            </ul>
+            @*<ul class="nav navbar-nav navbar-right">
+                    @if (!UserSession.IsLoggedIn) {
+                        <li>@Html.ActionLink("Login", "Index", "Login")</li>
+                        <li>@Html.ActionLink("Register", "Index", "Register")</li>
+                    } else {
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" role="button" aria-expanded="False" class="dropdown-toggle">
+                                <img alt="@UserSession.CurrentUser.DisplayName" src="@UserSession.CurrentUser.GetProfilePic()" height="18px" width="18px" /> @UserSession.CurrentUser.DisplayName<span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
+                            </ul>
+                        </li>
+                    }
+                </ul>*@
+        </div>
+    </div>
+</div>

@@ -1,58 +1,31 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/css/site")
-    @Scripts.Render("~/js/dependencies")
-    @Scripts.Render("~/js/controls")
+    @{
+        Html.RenderPartial("Header");
+    }
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                </ul>
-                @*<ul class="nav navbar-nav navbar-right">
-                    @if (!UserSession.IsLoggedIn) {
-                        <li>@Html.ActionLink("Login", "Index", "Login")</li>
-                        <li>@Html.ActionLink("Register", "Index", "Register")</li>
-                    } else {
-                        <li class="dropdown">
-                            <a data-toggle="dropdown" role="button" aria-expanded="False" class="dropdown-toggle">
-                                <img alt="@UserSession.CurrentUser.DisplayName" src="@UserSession.CurrentUser.GetProfilePic()" height="18px" width="18px" /> @UserSession.CurrentUser.DisplayName<span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
-                            </ul>
-                        </li>
-                    }
-                </ul>*@
-            </div>
-        </div>
-    </div>
+    @{
+        Html.RenderPartial("Menu");
+    }
     <div class="container body-content">
-        @if (UserSession.IsLoggedIn) {
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div style="display: inline-block"><img src="@UserSession.CurrentUser.GetProfilePic()" height="75px" width="75px" alt="@UserSession.CurrentUser.DisplayName" /></div>
+        <div class="modal-content">
+            <div class="modal-body">
+                @if (UserSession.IsLoggedIn) {
+                    <div style="display: inline-block">
+                        <img src="@UserSession.CurrentUser.GetProfilePic()" height="75px" width="75px" alt="@UserSession.CurrentUser.DisplayName" />
+                    </div>
                     <div class="row" style="margin-left: 10px; display: inline-block">
-                        <a href="@Settings.Url/@Html.Raw("User-" + UserSession.CurrentUser.Id + ".html")">@UserSession.CurrentUser.DisplayName</a>
+                        <a href="@Settings.Url/@Html.Raw("User-" + UserSession.CurrentUser.Id + ".html")">@UserSession.CurrentUser.DisplayName</a> (<a href="~/Logout">Logout</a>)
                         <br />
                         <i>Last login: @UserSession.CurrentUser.LastLogin.ToLongDateString() @UserSession.CurrentUser.LastLogin.ToLongTimeString()</i>
                     </div>
-                </div>
+                } else {
+                    <a href="~/Login">Login</a> @Html.Raw("|") <a href="~/Register">Regster</a>
+                }
             </div>
-        }
+        </div>
         @RenderBody()
         <hr />
         <footer>

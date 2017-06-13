@@ -19,6 +19,7 @@ namespace RPNETForum.Classes.Users {
         public bool HasGravatar { get; set; }
         public string ProfilePic { get; set; }
         public DateTime LastLogin { get; set; }
+        public DateTime RegistrationDate { get; set; }
     }
 
     public class Verification : IVerification {

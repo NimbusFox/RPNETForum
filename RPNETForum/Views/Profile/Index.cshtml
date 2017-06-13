@@ -1,7 +1,15 @@
 ﻿@model RPNETForum.Classes.Users.User
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = Model.DisplayName + "'" + (Model.DisplayName[Model.DisplayName.Length - 1] == 's' ? "" : "s") + " Profile";
 }
 
-<h2>@Model.DisplayName</h2>
-
+<div class="modal-content" style="margin-top: 20px">
+    <div class="modal-body">
+        <h3>@Model.DisplayName</h3>
+        <h5>(Group tag or personal tag)</h5>
+        <br/>
+        <b>Registration Date:</b> @Model.RegistrationDate.ToShortDateString()<br/>
+        <b>Last Login:</b> @Model.LastLogin
+        <img src="@Model.GetProfilePic()" style="position: absolute; top: 35px; right: 15px" alt="@Model.DisplayName"/>
+    </div>
+</div>
