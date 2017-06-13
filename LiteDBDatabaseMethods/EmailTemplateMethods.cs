@@ -9,12 +9,6 @@ using RPNETForum.Interfaces.DatabaseMethods;
 namespace RPNETForum.DatabaseMethods.LiteDB {
     public class EmailTemplateMethods : BaseMethods, IEmailTemplateMethods {
 
-        public EmailTemplateMethods() {
-            if (GetTemplateCount() == 0) {
-                CreateTemplate("Verification", "Hello {username},<br/><br/>Click <a href=\"http://{url}/Verify/{verification}\">here</a> to verify your account");
-            }
-        }
-
         public bool CreateTemplate(string name, string template) {
             if (TemplateExists(name)) {
                 return false;

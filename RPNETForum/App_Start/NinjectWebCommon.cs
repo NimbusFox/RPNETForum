@@ -63,14 +63,36 @@ namespace RPNETForum.App_Start {
             }
 
             if (Settings.DatabaseType == DatabaseTypes.LiteDB) {
-                kernel.Bind<IUserMethods>().To<DatabaseMethods.LiteDB.UserMethods>();
+                kernel.Bind<ICategoryMethods>().To<DatabaseMethods.LiteDB.CategoryMethods>();
                 kernel.Bind<IEmailTemplateMethods>().To<DatabaseMethods.LiteDB.EmailTemplateMethods>();
+                kernel.Bind<IForumMethods>().To<DatabaseMethods.LiteDB.ForumMethods>();
+                kernel.Bind<IPostMethods>().To<DatabaseMethods.LiteDB.PostMethods>();
+                kernel.Bind<IThreadMethods>().To<DatabaseMethods.LiteDB.ThreadMethods>();
+                kernel.Bind<IUserMethods>().To<DatabaseMethods.LiteDB.UserMethods>();
             } else if (Settings.DatabaseType == DatabaseTypes.MySql) {
-                kernel.Bind<IUserMethods>().To<DatabaseMethods.MySql.UserMethods>();
+                kernel.Bind<ICategoryMethods>().To<DatabaseMethods.MySql.CategoryMethods>();
                 kernel.Bind<IEmailTemplateMethods>().To<DatabaseMethods.MySql.EmailTemplateMethods>();
+                kernel.Bind<IForumMethods>().To<DatabaseMethods.MySql.ForumMethods>();
+                kernel.Bind<IPostMethods>().To<DatabaseMethods.MySql.PostMethods>();
+                kernel.Bind<IThreadMethods>().To<DatabaseMethods.MySql.ThreadMethods>();
+                kernel.Bind<IUserMethods>().To<DatabaseMethods.MySql.UserMethods>();
             } else if (Settings.DatabaseType == DatabaseTypes.Sqlite) {
-                kernel.Bind<IUserMethods>().To<DatabaseMethods.Sqlite.UserMethods>();
+                kernel.Bind<ICategoryMethods>().To<DatabaseMethods.Sqlite.CategoryMethods>();
                 kernel.Bind<IEmailTemplateMethods>().To<DatabaseMethods.Sqlite.EmailTemplateMethods>();
+                kernel.Bind<IForumMethods>().To<DatabaseMethods.Sqlite.ForumMethods>();
+                kernel.Bind<IPostMethods>().To<DatabaseMethods.Sqlite.PostMethods>();
+                kernel.Bind<IThreadMethods>().To<DatabaseMethods.Sqlite.ThreadMethods>();
+                kernel.Bind<IUserMethods>().To<DatabaseMethods.Sqlite.UserMethods>();
+            } else {
+                throw new Exception("Invalid DatabaseType");
+            }
+
+            if (kernel.Get<IEmailTemplateMethods>().GetTemplateCount() == 0) {
+                kernel.Get<IEmailTemplateMethods>().CreateTemplate("Verification", "Hello {username},<br/><br/>Click <a href=\"http://{url}/Verify/{verification}\">here</a> to verify your account");
+            }
+
+            if (kernel.Get<ICategoryMethods>().CountCategories() == 0) {
+                kernel.Get<ICategoryMethods>().CreateCategory(1, "First Category", "A demo description");
             }
 
             new Users(kernel.Get<IUserMethods>(), kernel.Get<IEmailTemplateMethods>());

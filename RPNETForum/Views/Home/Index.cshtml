@@ -1,5 +1,16 @@
-﻿
+﻿@model List<RPNETForum.Interfaces.Forum.ICategory>
 @{
     ViewBag.Title = "Index";
 }
 
+@foreach (var category in Model) {
+    var description = string.IsNullOrWhiteSpace(@category.Description) ? "" : " - " + category.Description;
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">@category.Name@description</h3>
+        </div>
+        <div class="panel-body">
+            A demo category
+        </div>
+    </div>
+}

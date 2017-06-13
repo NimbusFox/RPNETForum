@@ -1,5 +1,7 @@
-﻿namespace RPNETForum.DatabaseMethods.LiteDB {
-    public class ThreadMethods {
+﻿using RPNETForum.Interfaces.DatabaseMethods;
+
+namespace RPNETForum.DatabaseMethods.LiteDB {
+    public class ThreadMethods : BaseMethods, IThreadMethods {
         
     }
 }

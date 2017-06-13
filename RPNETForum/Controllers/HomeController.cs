@@ -9,13 +9,18 @@ using RPNETForum.Interfaces.DatabaseMethods;
 namespace RPNETForum.Controllers {
     public class HomeController : Controller {
         private IUserMethods _userMethods;
+        private ICategoryMethods _categoryMethods;
+        private IForumMethods _forumMethods;
 
-        public HomeController(IUserMethods userMethods) {
+        public HomeController(IUserMethods userMethods, ICategoryMethods categoryMethods, IForumMethods forumMethods) {
             _userMethods = userMethods;
+            _categoryMethods = categoryMethods;
+            _forumMethods = forumMethods;
         }
 
         public ActionResult Index() {
-            return View();
+            var catergories = _categoryMethods.GetCategories();
+            return View(catergories);
         }
 
         public ActionResult Verify(string token) {
