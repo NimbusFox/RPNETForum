@@ -32,6 +32,10 @@ namespace RPNETForum.DatabaseMethods.MySql {
             throw new NotImplementedException();
         }
 
+        public bool IsValidSession(string token) {
+            throw new NotImplementedException();
+        }
+
         public void AddVerification(int uid, string token) {
             throw new NotImplementedException();
         }
@@ -56,6 +60,14 @@ namespace RPNETForum.DatabaseMethods.MySql {
             throw new NotImplementedException();
         }
 
+        public void AddSession(int uid, string token) {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveSession(string token) {
+            throw new NotImplementedException();
+        }
+
         public IUser GetLastUser() {
             throw new NotImplementedException();
         }
@@ -73,6 +85,10 @@ namespace RPNETForum.DatabaseMethods.MySql {
         }
 
         public IUser GetUserByEmail(string email) {
+            throw new NotImplementedException();
+        }
+
+        public IUser GetUserBySession(string token) {
             throw new NotImplementedException();
         }
     }

@@ -15,6 +15,7 @@ namespace RPNETForum.Interfaces.Users {
         bool Verified { get; set; }
         bool HasGravatar { get; set; }
         string ProfilePic { get; set; }
+        DateTime LastLogin { get; set; }
     }
 
     public interface ISession {

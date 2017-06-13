@@ -11,6 +11,12 @@ namespace RPNETForum {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "Profile",
+                url: "User-{id}.html",
+                defaults: new {controller = "Profile", action = "Index", id = -1}
+            );
+
+            routes.MapRoute(
                 name: "Verify",
                 url: "Verify/{token}",
                 defaults: new { controller = "Home", action = "Verify", token = UrlParameter.Optional }

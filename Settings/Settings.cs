@@ -12,6 +12,8 @@ namespace RPNETForum {
     public static class Settings {
         private static LiteDatabase _db;
 
+        private static string _url;
+
         public static DatabaseTypes DatabaseType;
 
         public static string ReCaptchaPublic;
@@ -21,9 +23,13 @@ namespace RPNETForum {
         public static string SmtpHost;
         public static string SmtpUser;
         public static string SmtpPassword;
+
         public static int SmtpPort;
 
-        public static string Url;
+        public static string Url {
+            get => _url[_url.Length - 1] == '/' ? _url.Substring(0, _url.Length - 1) : _url;
+            set => _url = value;
+        }
 
         static Settings() {
             if (!Directory.Exists(HostingEnvironment.MapPath("~/App_Data/Settings"))) {

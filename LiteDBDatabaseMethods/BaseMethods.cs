@@ -14,6 +14,7 @@ namespace RPNETForum.DatabaseMethods.LiteDB {
         protected LiteDatabase _db;
         protected LiteCollection<User> _userDB;
         protected LiteCollection<Verification> _verificationDB;
+        protected LiteCollection<Session> _sessionDB;
         protected LiteCollection<EmailTemplate> _emailTemplateDB;
 
         public BaseMethods() {
@@ -25,6 +26,7 @@ namespace RPNETForum.DatabaseMethods.LiteDB {
 
             _userDB = _db.GetCollection<User>("Users");
             _verificationDB = _db.GetCollection<Verification>("Verifications");
+            _sessionDB = _db.GetCollection<Session>("Sessions");
             _emailTemplateDB = _db.GetCollection<EmailTemplate>("EmailTemplates");
         }
     }

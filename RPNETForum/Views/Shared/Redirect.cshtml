@@ -1,0 +1,30 @@
+﻿@model RPNETForum.Classes.Models.RedirectModel
+@{
+    ViewBag.Title = "Redirect";
+    Layout = "Layouts/RedirectConfirmation.cshtml";
+}
+
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            document.location.href = "@Model.RedirectTo";
+        }, @Model.RedirectSeconds * 1000);
+    })
+</script>
+
+<center>
+    <div class="modal" style="display: block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">@Model.Title</h4>
+                </div>
+                <div class="modal-body">
+                    <center>
+                        <p>@Html.Raw(Model.Message)</p>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</center>

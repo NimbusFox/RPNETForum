@@ -87,9 +87,39 @@ namespace RPNETForum {
             if (vPassword && verified) {
                 var manager = new SessionIDManager();
 
+                bool redirected;
+                bool isAdded;
+
+                var oldID = UserSession.CurrentContext.Session.SessionID;
+
                 var id = manager.CreateSessionID(UserSession.CurrentContext);
 
                 UserSession.CurrentUser = user;
+
+                var oldDate = user.LastLogin;
+
+                user.LastLogin = DateTime.UtcNow;
+
+                _userMethods.UpdateUser(user);
+
+                user.LastLogin = oldDate;
+
+                UserSession.AddTempSession(id, UserSession.CurrentContext.Session);
+
+                manager.RemoveSessionID(UserSession.CurrentContext);
+                manager.SaveSessionID(UserSession.CurrentContext, id, out redirected, out isAdded);
+
+                for (var i = 0; i < UserSession.CurrentContext.Response.Cookies.Count; i++) {
+                    var cookie = UserSession.CurrentContext.Response.Cookies.Get(i);
+                    if (cookie != null && cookie.Value == id) {
+                        var current = cookie;
+
+                        current.Expires = DateTime.Now.AddMonths(2);
+
+                        UserSession.CurrentContext.Response.Cookies.Remove(current.Name);
+                        UserSession.CurrentContext.Response.Cookies.Add(current);
+                    }
+                }
             }
 
             return (vPassword, verified);
@@ -98,7 +128,14 @@ namespace RPNETForum {
         public static void Logout() {
             UserSession.CurrentUser = null;
 
-            new SessionIDManager().CreateSessionID(UserSession.CurrentContext);
+            var manager = new SessionIDManager();
+
+            bool redirected;
+            bool isAdded;
+
+            var id = manager.CreateSessionID(UserSession.CurrentContext);
+            manager.RemoveSessionID(UserSession.CurrentContext);
+            manager.SaveSessionID(UserSession.CurrentContext, id, out redirected, out isAdded);
         }
 
         public static bool DeleteUser(IUserMethods userMethods, User user = null) {
@@ -111,7 +148,9 @@ namespace RPNETForum {
 
                 UserSession.CurrentUser = null;
 
-                new SessionIDManager().CreateSessionID(UserSession.CurrentContext);
+                var session = new SessionIDManager();
+
+                session.RemoveSessionID(UserSession.CurrentContext);
 
                 return true;
             } catch {

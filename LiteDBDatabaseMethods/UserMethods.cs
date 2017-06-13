@@ -47,6 +47,13 @@ namespace RPNETForum.DatabaseMethods.LiteDB {
             return _userDB.FindOne(x => x.Id == uid).Verified;
         }
 
+        public bool IsValidSession(string token) {
+            if (_sessionDB.Count() == 0) {
+                return false;
+            }
+            return _sessionDB.Exists(x => x.SessionToken == token);
+        }
+
         public void AddVerification(int uid, string token) {
             var verification = new Verification {
                 UID = uid,
@@ -98,6 +105,16 @@ namespace RPNETForum.DatabaseMethods.LiteDB {
             return _userDB.Count();
         }
 
+        public void AddSession(int uid, string token) {
+            _sessionDB.Insert(new Session {SessionToken = token, UID = uid});
+        }
+
+        public void RemoveSession(string token) {
+            if (IsValidSession(token)) {
+                _sessionDB.Delete(x => x.SessionToken == token);
+            }
+        }
+
         public IUser GetLastUser() {
             return _userDB.FindAll().Last();
         }
@@ -112,6 +129,16 @@ namespace RPNETForum.DatabaseMethods.LiteDB {
 
         public IUser GetUserByEmail(string email) {
             return !EmailExists(email) ? null : _userDB.FindOne(x => x.Email == email);
+        }
+
+        public IUser GetUserBySession(string token) {
+            if (!IsValidSession(token)) {
+                return null;
+            }
+
+            var uid = _sessionDB.FindOne(x => x.SessionToken == token).UID;
+
+            return !UserExists(uid) ? null : _userDB.FindOne(x => x.Id == uid);
         }
     }
 }

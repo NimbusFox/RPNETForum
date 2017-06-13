@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EmailTemplate.cs" />
+    <Compile Include="Models\RedirectModel.cs" />
     <Compile Include="Models\Users\LoginModel.cs" />
     <Compile Include="Models\Users\RegisterModel.cs">
       <LastGenOutput>RegisterModel.d.ts</LastGenOutput>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using RPNETForum.Classes.Models;
 using RPNETForum.Classes.Models.Users;
 using RPNETForum.Interfaces.DatabaseMethods;
 
@@ -22,7 +23,17 @@ namespace RPNETForum.Controllers.Users {
             if (!output.password || !output.verified) {
                 return View(new Tuple<bool, bool, string>(output.Item1, output.Item2, login.Username));
             } else {
-                return RedirectToAction("Index", "Home");
+
+                var user = UserSession.CurrentUser;
+
+                UserSession.CurrentUser = null;
+
+                return View("Redirect", new RedirectModel {
+                    Message = "You have been logged in successfully",
+                    RedirectSeconds = 3,
+                    RedirectTo = string.IsNullOrWhiteSpace(UserSession.PreviousURL) || string.IsNullOrWhiteSpace(UserSession.PreviousURL) ? Settings.Url : UserSession.PreviousURL,
+                    Title = "Welcome back " + user.DisplayName
+                });
             }
         }
     }

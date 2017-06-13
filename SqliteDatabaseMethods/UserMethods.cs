@@ -26,6 +26,7 @@ namespace RPNETForum.DatabaseMethods.Sqlite {
             public bool Verified { get; set; }
             public bool HasGravatar { get; set; }
             public string ProfilePic { get; set; }
+            public DateTime LastLogin { get; set; }
         }
 
         private class SessionDB: ISession {
@@ -67,6 +68,10 @@ namespace RPNETForum.DatabaseMethods.Sqlite {
 
         public bool IsVerified(int uid) {
             return _db.Table<UserDB>().First(x => x.Id == uid).Verified;
+        }
+
+        public bool IsValidSession(string token) {
+            throw new NotImplementedException();
         }
 
         public void AddVerification(int uid, string token) {
@@ -111,6 +116,14 @@ namespace RPNETForum.DatabaseMethods.Sqlite {
             return _db.Table<UserDB>().Count();
         }
 
+        public void AddSession(int uid, string token) {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveSession(string token) {
+            throw new NotImplementedException();
+        }
+
         public IUser GetLastUser() {
             return _db.Table<UserDB>().Last();
         }
@@ -135,6 +148,10 @@ namespace RPNETForum.DatabaseMethods.Sqlite {
 
         public IUser GetUserByEmail(string email) {
             return !EmailExists(email) ? null : _db.Table<UserDB>().First(x => x.Email == email);
+        }
+
+        public IUser GetUserBySession(string token) {
+            throw new NotImplementedException();
         }
     }
 }
