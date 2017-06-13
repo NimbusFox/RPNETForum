@@ -18,14 +18,4 @@ namespace RPNETForum.Interfaces.Users {
         DateTime LastLogin { get; set; }
         DateTime RegistrationDate { get; set; }
     }
-
-    public interface ISession {
-        string SessionToken { get; set; }
-        int UID { get; set; }
-    }
-
-    public interface IVerification {
-        string VerificationToken { get; set; }
-        int UID { get; set; }
-    }
 }

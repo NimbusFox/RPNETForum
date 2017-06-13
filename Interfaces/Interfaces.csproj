@@ -43,13 +43,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseMethods\ICategoryMethods.cs" />
     <Compile Include="DatabaseMethods\IEmailTemplateMethods.cs" />
+    <Compile Include="DatabaseMethods\IForumMethods.cs" />
+    <Compile Include="DatabaseMethods\IPostMethods.cs" />
+    <Compile Include="DatabaseMethods\IThreadMethods.cs" />
     <Compile Include="DatabaseMethods\IUserMethods.cs" />
+    <Compile Include="Forum\ICategory.cs" />
+    <Compile Include="Forum\IForum.cs" />
+    <Compile Include="Forum\IPost.cs" />
+    <Compile Include="Forum\IThread.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Users\ISession.cs" />
     <Compile Include="Users\IUser.cs" />
+    <Compile Include="Users\IVerification.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
