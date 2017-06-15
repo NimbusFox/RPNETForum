@@ -15,7 +15,7 @@
             <div class="modal-body">
                 @if (UserSession.IsLoggedIn) {
                     <div style="display: inline-block">
-                        <img src="@UserSession.CurrentUser.GetProfilePic()" height="75px" width="75px" alt="@UserSession.CurrentUser.DisplayName" />
+                        <img src="@Settings.Url/Avatar/@UserSession.CurrentUser.Id" height="75px" width="75px" alt="@UserSession.CurrentUser.DisplayName" />
                     </div>
                     <div class="row" style="margin-left: 10px; display: inline-block">
                         <a href="@Settings.Url/User/@UserSession.CurrentUser.Id">@UserSession.CurrentUser.DisplayName</a> (<a href="~/Logout">Logout</a>)

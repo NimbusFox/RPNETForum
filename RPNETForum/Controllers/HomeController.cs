@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.IO;
+using System.Net;
+using System.Web.Hosting;
 using System.Web.Mvc;
-using RPNETForum.Classes.Forum;
 using RPNETForum.Classes.Models;
+using RPNETForum.Extensions.Users;
 using RPNETForum.Interfaces.DatabaseMethods;
 using RPNETForum.Interfaces.Forum;
 
@@ -54,6 +55,35 @@ namespace RPNETForum.Controllers {
                 RedirectTo = string.IsNullOrWhiteSpace(UserSession.PreviousURL) || string.IsNullOrWhiteSpace(UserSession.PreviousURL) ? Settings.Url : UserSession.PreviousURL,
                 Title = "Logged out"
             });
+        }
+
+        public ActionResult Avatar(int id) {
+            if (!Directory.Exists(HostingEnvironment.MapPath("~/App_Data/ImgCache"))) {
+                Directory.CreateDirectory(HostingEnvironment.MapPath("~/App_Data/ImgCache"));
+            }
+
+            if (!_userMethods.UserExists(id)) {
+                return HttpNotFound();
+            }
+
+            var user = _userMethods.GetUserByID(id);
+
+            if (!System.IO.File.Exists(HostingEnvironment.MapPath("~/App_Data/ImgCache/" + user.Id))) {
+                var webClient = new WebClient();
+
+                webClient.DownloadFile(user.GetProfilePic(), HostingEnvironment.MapPath("~/App_Data/ImgCache/" + user.Id));
+            }
+
+            var mime =
+                System.Web.MimeMapping.GetMimeMapping(HostingEnvironment.MapPath("~/App_Data/ImgCache/" + user.Id));
+
+            if (mime == "application/octet-stream") {
+                mime = "image/png";
+            }
+
+            Response.ContentType = mime;
+
+            return File(HostingEnvironment.MapPath("~/App_Data/ImgCache/" + user.Id), mime);
         }
     }
 }

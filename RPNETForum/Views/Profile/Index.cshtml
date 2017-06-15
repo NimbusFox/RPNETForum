@@ -11,6 +11,6 @@
         <br/>
         <b>Registration Date:</b> @Model.RegistrationDate.ToShortDateString()<br/>
         <b>Last Login:</b> @Model.LastLogin
-        <img src="@Model.GetProfilePic()" style="position: absolute; top: 35px; right: 15px" alt="@Model.DisplayName"/>
+        <img src="@Settings.Url/Avatar/@Model.Id" style="position: absolute; top: 35px; right: 15px" alt="@Model.DisplayName"/>
     </div>
 </div>

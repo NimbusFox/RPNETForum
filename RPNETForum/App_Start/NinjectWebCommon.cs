@@ -90,7 +90,7 @@ namespace RPNETForum.App_Start {
             }
 
             if (kernel.Get<IEmailTemplateMethods>().GetTemplateCount() == 0) {
-                kernel.Get<IEmailTemplateMethods>().CreateTemplate("Verification", "Hello {username},<br/><br/>Click <a href=\"http://{url}/Verify/{verification}\">here</a> to verify your account");
+                kernel.Get<IEmailTemplateMethods>().CreateTemplate("Verification", "Hello {username},<br/><br/>Click <a href=\"{url}/Verify/{verification}\">here</a> to verify your account");
             }
 
             if (kernel.Get<ICategoryMethods>().CountCategories() == 0) {
@@ -105,6 +105,28 @@ namespace RPNETForum.App_Start {
                     Description = "A demo description",
                     Name = "First Forum",
                     Permissions = new ForumPermissions()
+                });
+            }
+
+            if (kernel.Get<IThreadMethods>().CountThreads() == 0) {
+                kernel.Get<IThreadMethods>().AddThread(new Thread {
+                    Creator = 1,
+                    Forum = 1,
+                    Description = "A demo description",
+                    Name = "First Thread",
+                    Banned = new List<int>(),
+                    Permissions = new ForumPermissions()
+                });
+            }
+
+            if (kernel.Get<IPostMethods>().CountPosts() == 0) {
+                kernel.Get<IPostMethods>().AddPost(new Post {
+                    Edited = false,
+                    EditedAt = new DateTime(),
+                    Message = "This the first post of the thread",
+                    PostedAt = DateTime.Now,
+                    Poster = 1,
+                    Thread = 1
                 });
             }
 

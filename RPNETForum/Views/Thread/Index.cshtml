@@ -1,0 +1,29 @@
+﻿@model Tuple<RPNETForum.Interfaces.Forum.IThread, List<RPNETForum.Interfaces.Forum.IPost>, List<RPNETForum.Classes.Users.User>>
+@{
+    ViewBag.Title = Model.Item1.Name + " - Thread";
+}
+
+@{var description = string.IsNullOrWhiteSpace(Model.Item1.Description) ? "" : " - " + Model.Item1.Description;}
+<div class="panel panel-primary list-group">
+    <div class="panel-heading">
+        <h3 class="panel-title">@Model.Item1.Name@description</h3>
+    </div>
+    @if (Model.Item2.Count == 0) {
+        <div class="panel-body">
+            <p class="list-group-item-text">No posts exist in the thread</p>
+        </div>
+    } else {
+        foreach (var post in Model.Item2) {
+            var user = Model.Item3.First(x => x.Id == post.Poster);
+            <div class="panel-body row">
+                <div class="col-xs-12 col-sm-2">
+                    <center>
+                        <img src="@Settings.Url/Avatar/@user.Id" alt="@user.DisplayName"/><br/>
+                        <a href="@Settings.Url/User/@user.Id">@user.DisplayName</a>
+                    </center>
+                </div>
+                <div class="col-xs-12 col-sm-10"></div>
+            </div>
+        }
+    }
+</div>

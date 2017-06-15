@@ -35,6 +35,18 @@ namespace RPNETForum {
             );
 
             routes.MapRoute(
+                name: "Thread",
+                url: "Thread/{id}",
+                defaults: new {controller = "Thread", action = "Index", id = -1}
+            );
+
+            routes.MapRoute(
+                name: "Avatar",
+                url: "Avatar/{id}",
+                defaults: new {controller = "Home", action = "Avatar", id = -1}
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

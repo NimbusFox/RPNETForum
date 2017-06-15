@@ -197,6 +197,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SignalR.cs" />
     <Compile Include="Controllers\Forum\ForumController.cs" />
+    <Compile Include="Controllers\Forum\ThreadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Users\LoginController.cs" />
     <Compile Include="Controllers\Users\ProfileController.cs" />
@@ -250,6 +251,7 @@
     <Content Include="Views\Shared\Menu.cshtml" />
     <Content Include="Views\Shared\Header.cshtml" />
     <Content Include="Views\Forum\Index.cshtml" />
+    <Content Include="Views\Thread\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Elmah.Errors\" />

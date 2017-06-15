@@ -1,7 +1,23 @@
-﻿
+﻿@model Tuple<RPNETForum.Interfaces.Forum.IForum, List<RPNETForum.Interfaces.Forum.IThread>>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = Model.Item1.Name + " - Forum";
 }
 
-<h2>Index</h2>
-
+@{var description = string.IsNullOrWhiteSpace(Model.Item1.Description) ? "" : " - " + Model.Item1.Description;}
+<div class="panel panel-primary list-group">
+    <div class="panel-heading">
+        <h3 class="panel-title">@Model.Item1.Name@description</h3>
+    </div>
+    @if (Model.Item2.Count == 0) {
+        <div class="panel-body">
+            <p class="list-group-item-text">No threads exist in the forum</p>
+        </div>
+    } else {
+        foreach (var thread in Model.Item2) {
+            <a href="~/Thread/@thread.Id" class="panel-body list-group-item">
+                <h4 class="list-group-item-heading">@thread.Name</h4>
+                <p class="list-group-item-text">@thread.Description</p>
+            </a>
+        }
+    }
+</div>
